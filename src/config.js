@@ -3,8 +3,8 @@ export const CONFIG = {
   USE_WORDPRESS: true,
   
   // IMPORTANT: Replace with your actual WordPress URL
-  WORDPRESS_URL: 'http://service-manager-wp.local', // or http://localhost/service-manager-wp
+  WORDPRESS_URL: 'https://your-public-wordpress-domain.com', // <-- Replace with your real domain
   
   // API endpoints
-  API_BASE: 'http://service-manager-wp.local/wp-json/wp/v2' // or http://localhost/service-manager-wp/wp-json/wp/v2
+  API_BASE: 'https://your-public-wordpress-domain.com/wp-json/wp/v2' // <-- Replace with your real domain
 };
