@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import ServicesPage from './pages/ServicesPage';
 import BlogPage from './pages/BlogPage';
 import BlogDetailPage from './pages/BlogDetailPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
 import ContactPage from './pages/ContactPage';
 
 const App = () => {
@@ -18,7 +19,8 @@ const App = () => {
             <Route path="/" element={<HomePage />} />
             <Route path="/services" element={<ServicesPage />} />
             <Route path="/blog" element={<BlogPage />} />
-            <Route path="/blog/:id" element={<BlogDetailPage />} />
+            <Route path="/blog/:slug" element={<BlogDetailPage />} />
+            <Route path="/services/:slug" element={<ServiceDetailPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>
