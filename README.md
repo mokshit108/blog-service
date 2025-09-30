@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+# Service Manager
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React application for managing and displaying services and blog content, with optional integration to a WordPress backend.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Project Architecture
 
-### `npm start`
+- **Frontend:** React (Create React App), Tailwind CSS, React Router
+- **Backend (optional):** WordPress REST API (must be publicly accessible with HTTPS for production)
+- **Data:**
+  - Uses local JSON files for services/blogs by default
+  - Can fetch live data from a WordPress backend if configured
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Run Instructions
 
-### `npm test`
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Development Mode
+```bash
+npm start
+```
+- Runs the app at [http://localhost:3000](http://localhost:3000)
+- Uses local JSON data or your local WordPress API (see `src/config.js`)
 
-### `npm run build`
+### 3. Production Build
+```bash
+npm run build
+```
+- Builds the app for deployment (output in `/build`)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 4. Deploying
+- Deploy the `/build` folder to Netlify, Vercel, or any static hosting provider.
+- **If using WordPress API:** Your WordPress backend must be publicly accessible over HTTPS (see below).
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## WordPress Backend Requirements
 
-### `npm run eject`
+- To use live WordPress data in production, your WordPress site **must**:
+  - Be deployed to a public domain (not `.local` or `localhost`)
+  - Have a valid SSL certificate (HTTPS)
+  - Expose the REST API at `https://your-domain.com/wp-json/wp/v2/`
+- Update `src/config.js`:
+  ```js
+  export const CONFIG = {
+    USE_WORDPRESS: true,
+    WORDPRESS_URL: 'https://your-domain.com',
+    API_BASE: 'https://your-domain.com/wp-json/wp/v2'
+  };
+  ```
+- If you do **not** have a public WordPress server, set `USE_WORDPRESS: false` to use local JSON data.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+---
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Security Headers (Recommended for Production)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+If deploying to Netlify, add a `_headers` file in your `public/` folder:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Content-Security-Policy: default-src 'self'; img-src * data:; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline';
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+```
 
-## Learn More
+- Adjust the `Content-Security-Policy` as needed for your use case.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## reCAPTCHA Notes
 
-### Code Splitting
+- If you plan to use Google reCAPTCHA for forms:
+  - Register your site at [Google reCAPTCHA](https://www.google.com/recaptcha/about/)
+  - Add your site key and secret to your environment/config
+  - Integrate the reCAPTCHA widget in your forms (see [docs](https://developers.google.com/recaptcha/docs/v3))
+- **Note:** This project does not include reCAPTCHA by default, but is ready for integration.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Troubleshooting
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- **Build fails on Netlify:** Ensure all warnings are fixed (CI treats warnings as errors).
+- **Mixed Content errors:** Your WordPress API must be HTTPS and public.
+- **API not reachable:** Check your domain, DNS, and SSL certificate.
 
-### Making a Progressive Web App
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## License
+MIT
