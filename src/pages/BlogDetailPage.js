@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { fetchSinglePost, fetchPostBySlug } from '../services/wordpressApi';
+import { fetchPostBySlug } from '../services/wordpressApi';
 import blogsData from '../data/blogs.json';
 import { CONFIG } from '../config';
 
